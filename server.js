@@ -9,7 +9,7 @@ const server = express()
 
 const wss = new SocketServer({ server });
 
-const broadcast = function broadcast(data) {
+function broadcast(data) {
   const stringifiedData = JSON.stringify(data);
   wss.clients.forEach(function each(client) {
     client.send(stringifiedData);
@@ -31,8 +31,8 @@ wss.on('connection', (socket) => {
         message.type= "outgoingMessage";
         broadcast(message)
         break;
-      case 'chatUser':
-        message.id= uuid.v4();
+      case 'userNameChange':
+        //message.id= uuid.v4();
         message.type= "outgoingUser";
         broadcast(message);
         break;
